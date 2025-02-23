@@ -54,7 +54,8 @@ class GeminiVM(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 messageList.add(MessageModel(question, "user"))
-                val contextChat = messageList.joinToString(separator = "\n") { "${it.role}: ${it.message}"}
+                val contextChat =
+                    messageList.joinToString(separator = "\n") { "${it.role}: ${it.message}" }
                 val response = chat.sendMessage(contextChat)
                 messageList.add(MessageModel(response.text.toString(), "model"))
 
@@ -74,19 +75,21 @@ class GeminiVM(application: Application) : AndroidViewModel(application) {
     }
 
     fun loadChat() {
-        try {
-            viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
                 val chatDao = db.chatDao()
                 val savedChat = chatDao.getChat()
                 messageList.clear()
                 savedChat.forEach {
                     messageList.add(MessageModel(it.chat, it.role))
                 }
+
+            } catch (e: Exception) {
+                messageList.add(MessageModel("ERROR; ${e.message.toString()}", "model"))
             }
-        } catch (e: Exception) {
-            messageList.add(MessageModel("ERROR; ${e.message.toString()}", "model"))
         }
     }
+
 
     fun deleteChat() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -104,19 +107,18 @@ class GeminiVM(application: Application) : AndroidViewModel(application) {
 
     var descriptionResponse by mutableStateOf("")
 
-    var image by  mutableStateOf<Uri>(Uri.EMPTY)
+    var image by mutableStateOf<Uri>(Uri.EMPTY)
 
     fun descriptionImage(bitmap: Bitmap) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-
                 val inputContent = content {
                     image(bitmap)
                     text("Describe la imagen que veas a continuacion, no necesitas detallar todo")
                 }
                 val response = generativeModel.generateContent(inputContent)
                 descriptionResponse = response.text.toString()
-            }catch (e: Exception) {
+            } catch (e: Exception) {
                 descriptionResponse = "ERROR; ${e.message.toString()}"
             }
         }
