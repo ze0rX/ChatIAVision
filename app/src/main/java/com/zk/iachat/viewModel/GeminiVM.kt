@@ -35,18 +35,6 @@ class GeminiVM(application: Application) : AndroidViewModel(application) {
         mutableStateListOf<MessageModel>()
     }
 
-    /* fun sendMessage(question: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                messageList.add(MessageModel(question, "user"))
-                val response = chat.sendMessage(question)
-                messageList.add(MessageModel(response.text.toString(), "model"))
-            }catch (e: Exception) {
-                messageList.add(MessageModel("ERROR; ${e.message.toString()}", "model"))
-            }
-        }
-     }*/
-
     fun sendMessage(question: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
