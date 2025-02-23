@@ -54,8 +54,7 @@ class GeminiVM(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 messageList.add(MessageModel(question, "user"))
-                val contextChat =
-                    messageList.joinToString(separator = "\n") { "${it.role}: ${it.message}" }
+                val contextChat = messageList.joinToString(separator = "\n") { "${it.role}: ${it.message}" }
                 val response = chat.sendMessage(contextChat)
                 messageList.add(MessageModel(response.text.toString(), "model"))
 
