@@ -88,9 +88,7 @@ class GeminiVM(application: Application) : AndroidViewModel(application) {
     }
 
     //ENVIAR A LA BASE DE DATOS DE GEMINI
-
     var descriptionResponse by mutableStateOf("")
-
     var image by mutableStateOf<Uri>(Uri.EMPTY)
 
     fun descriptionImage(bitmap: Bitmap) {
@@ -98,7 +96,7 @@ class GeminiVM(application: Application) : AndroidViewModel(application) {
             try {
                 val inputContent = content {
                     image(bitmap)
-                    text("Describe la imagen que veas a continuacion, no necesitas detallar todo")
+                    text("Describe la imagen que veas a continuacion, no necesitas detallar todo") // Aqui puedes agregar lo que requieras que haga al pasarle la imagen como parametro
                 }
                 val response = generativeModel.generateContent(inputContent)
                 descriptionResponse = response.text.toString()
