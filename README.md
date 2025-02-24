@@ -1,7 +1,8 @@
-////////////////////////////
-*     ChatIAVision v1     *
-///////////////////////////
+/////////////////////////
+%%%  ChatIAVision v1  %%%
+/////////////////////////
 Este proyecto tiene la finalidad de almacenar sus propios chats de forma privado usando:
+-> Conexión directa con gemini-2.0-flash (Requiere api key)
 -> Room como base de datos local.
 -> Logica para añadir contexto a la conversacion y poder guardarla en room.
 -> Enviar imagenes a gemini mediante el uso de la cámara.
